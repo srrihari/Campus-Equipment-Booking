@@ -31,30 +31,25 @@ pipeline {
                 bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t campus-equipment-booking:set-f .'
             }
         }
-
         
-        stage('Check Kubernetes Context') {
-            steps {
-                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" config current-context'
-                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" config view'
-            }
-        }
-
         
         stage('Deploy to Kubernetes') {
             steps {
-                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" apply -f k8s/deployment.yaml'
-                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" apply -f k8s/service.yaml'
-                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" rollout status deployment/campus-equipment-booking --timeout=120s'
+                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" --kubeconfig="C:\\Users\\SNUC\\.kube\\config" apply -f k8s/deployment.yaml'
+                
+                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" --kubeconfig="C:\\Users\\SNUC\\.kube\\config" apply -f k8s/service.yaml'
+                
+                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" --kubeconfig="C:\\Users\\SNUC\\.kube\\config" rollout status deployment/campus-equipment-booking --timeout=120s'
             }
         }
+
 
 
     }
 
     post {
         success {
-            echo 'Build, tests, packaging, and Docker image creation completed successfully.'
+            echo 'Build, tests, packaging, Docker image creation, and Kubernetes deployment completed successfully.'
         }
         failure {
             echo 'Pipeline failed. Check the console output.'
