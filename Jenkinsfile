@@ -33,6 +33,13 @@ pipeline {
         }
 
         
+        stage('Check Kubernetes Context') {
+            steps {
+                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" config current-context'
+                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" config view'
+            }
+        }
+
         
         stage('Deploy to Kubernetes') {
             steps {
