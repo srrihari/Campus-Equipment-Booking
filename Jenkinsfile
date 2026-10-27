@@ -25,11 +25,17 @@ pipeline {
                 bat 'mvn package -DskipTests'
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t campus-equipment-booking:set-f .'
+            }
+        }
     }
 
     post {
         success {
-            echo 'Build, tests, and packaging completed successfully.'
+            echo 'Build, tests, packaging, and Docker image creation completed successfully.'
         }
         failure {
             echo 'Pipeline failed. Check the console output.'
