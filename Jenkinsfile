@@ -28,7 +28,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t campus-equipment-booking:set-f .'
+                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t campus-equipment-booking:set-f .'
             }
         }
     }
