@@ -11,13 +11,17 @@ public class ApiController {
  @ExceptionHandler(NoSuchElementException.class) @ResponseStatus(HttpStatus.NOT_FOUND) public Map<String,String> notFound(Exception e){return Map.of("error","NOT_FOUND","message",e.getMessage());}
  @ExceptionHandler(IllegalArgumentException.class) @ResponseStatus(HttpStatus.BAD_REQUEST) public Map<String,String> badRequest(Exception e){return Map.of("error","BAD_REQUEST","message",e.getMessage());}
  @ExceptionHandler(IllegalStateException.class) @ResponseStatus(HttpStatus.CONFLICT) public Map<String,String> conflict(Exception e){return Map.of("error","CONFLICT","message",e.getMessage());}
- @GetMapping("/api/status")
+ 
+@GetMapping("/api/status")
 public Map<String, Object> status() {
     return Map.of(
         "status", "UP",
         "application", "Campus Equipment Booking",
-        "message", "Service is running successfully",
+        "version", "2.0",
+        "demoFeature", "CI/CD deployment verified",
+        "message", "Updated through Jenkins pipeline",
         "groups", List.of("liveness", "readiness")
     );
 }
+
 }
