@@ -33,12 +33,17 @@ pipeline {
         }
         
         
+       
         stage('Deploy to Kubernetes') {
             steps {
+                bat 'set "MINIKUBE_HOME=C:\\Users\\SNUC" && "C:\\Program Files\\Kubernetes\\Minikube\\minikube.exe" -p minikube image load campus-equipment-booking:set-f'
+
                 bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" --kubeconfig="C:\\Users\\SNUC\\.kube\\config" apply -f k8s/deployment.yaml'
-                
+
                 bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" --kubeconfig="C:\\Users\\SNUC\\.kube\\config" apply -f k8s/service.yaml'
-                
+
+                bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" --kubeconfig="C:\\Users\\SNUC\\.kube\\config" rollout restart deployment/campus-equipment-booking'
+
                 bat '"C:\\Users\\SNUC\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" --kubeconfig="C:\\Users\\SNUC\\.kube\\config" rollout status deployment/campus-equipment-booking --timeout=120s'
             }
         }

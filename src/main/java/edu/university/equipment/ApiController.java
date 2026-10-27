@@ -17,8 +17,8 @@ public Map<String, Object> status() {
     return Map.of(
         "status", "UP",
         "application", "Campus Equipment Booking",
-        "version", "2.0",
-        "demoFeature", "CI/CD deployment verified",
+        "version", "3.0",
+        "message", "Version 3 deployed automatically from GitHub",
         "message", "Updated through Jenkins pipeline",
         "groups", List.of("liveness", "readiness")
     );
